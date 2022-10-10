@@ -9,10 +9,16 @@ function App() {
   })
   useEffect(() => {
     localStorage.setItem('location', JSON.stringify(data))
-
   }, [data])
+
   const key = '3db77fbcd6d10607b95e6918d88f2dd2'
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=imperial&appid=${key}`
+
+  useEffect(() => {
+    fetch(url)
+      .then(res => res.json())
+      .then(data => setData(data))
+  }, [])
 
   const searchLocation = (event) => {
     if (event.key === 'Enter') {
@@ -25,16 +31,19 @@ function App() {
   }
 
 
+
   return (
     <div className="app">
       <div className="search">
-        <input
-          value={location}
-          onChange={event => setLocation(event.target.value)}
-          onKeyPress={searchLocation}
-          placeholder='Enter Location'
-          type='text'
-        />
+          <input
+            value={location}
+            onChange={event => setLocation(event.target.value)}
+            onKeyPress={searchLocation}
+            placeholder='Enter Location'
+            type='text'
+          />
+
+        {/* <button onClick={(el) => getLang(el)}>RU</button> */}
       </div>
       <div className="container">
         <div className="top">
